@@ -1,0 +1,18 @@
+.left, .right {
+	height: 50vh;
+	width: 100%
+}
+
+@media screen and (min-width: 768px){
+	.left, .right {
+		height: 100vh
+	}
+}
+
+.left {
+	background: lightblue;
+}
+
+.right {
+	background: lightcoral;
+}
