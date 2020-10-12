@@ -7,7 +7,7 @@ import SignedOutLinks from './SignedOutLinks';
 
 export default function GigNavbar() {
   return (
-    <Navbar bg='dark' variant='dark' fixed='top'>
+    <Navbar bg='dark' variant='dark' sticky='top' className='mb-5'>
       <Container>
         <Link to='/home'>
           <Navbar.Brand>Gig</Navbar.Brand>
