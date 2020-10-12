@@ -4,12 +4,16 @@ import './App.css';
 import Home from './components/Home';
 import CastingRegistration from './components/CastingRegistration';
 import ActorRegistration from './components/ActorRegistration';
+import SignIn from './components/SignIn';
+import GigNavbar from './components/layout/GigNavbar';
 
 function App() {
   return (
     <BrowserRouter>
+      <GigNavbar />
       <Switch>
         <Route path='/home' render={() => <Home />} />
+        <Route path='/signin' render={() => <SignIn />} />
         <Route
           path='/casting_director/registration'
           render={() => <CastingRegistration />}
