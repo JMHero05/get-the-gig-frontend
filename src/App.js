@@ -6,6 +6,7 @@ import CastingRegistration from './components/CastingRegistration';
 import ActorRegistration from './components/ActorRegistration';
 import SignIn from './components/SignIn';
 import GigNavbar from './components/layout/GigNavbar';
+import GigContainer from './containers/GigContainer';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           path='/actor/registration'
           render={() => <ActorRegistration />}
         />
+        <Route path='/gigs' render={() => <GigContainer />} />
       </Switch>
     </BrowserRouter>
   );
