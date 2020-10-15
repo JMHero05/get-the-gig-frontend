@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { Form, Col, Button, Container, FormFile } from 'react-bootstrap';
-import { states } from '../helpers/state';
+import { states } from '../helpers/states';
 import { gender } from '../helpers/gender';
 
 class ActorRegistration extends Component {
@@ -25,22 +27,15 @@ class ActorRegistration extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    let actor = {
-      first_name: this.state.first_name,
-      last_name: this.state.last_name,
-      gender: this.state.gender,
-      image: this.state.image,
-      address: this.state.address,
-      city: this.state.city,
-      state: this.state.state,
-      zip: this.state.zip,
-      email: this.state.email,
-      password: this.state.password,
-    };
+    let actor = this.state;
     console.log(actor);
   };
 
   render() {
+    const { user } = this.props;
+
+    if (user) return <Redirect to='/gigs' />;
+
     return (
       <Container className='m-5'>
         <h1>Actor Registration</h1>
@@ -150,4 +145,10 @@ class ActorRegistration extends Component {
   }
 }
 
-export default ActorRegistration;
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.user,
+  };
+};
+
+export default connect(mapStateToProps)(ActorRegistration);
