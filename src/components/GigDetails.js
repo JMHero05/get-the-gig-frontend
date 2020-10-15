@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getGig } from '../redux/actions/gigActions';
 import { Jumbotron, Container, Row, Col } from 'react-bootstrap';
-import RoleDetails from './RoleDetails';
+import RoleDetails from './RoleCard';
 
 function GigDetails(props) {
   const { gig } = props;

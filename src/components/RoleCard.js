@@ -3,7 +3,7 @@ import { Card, Row, Col, Container, Button, Nav } from 'react-bootstrap';
 
 export default function RoleDetails(props) {
   const { role } = props;
-  console.log(role);
+
   return (
     <Card className='mb-3'>
       <Card.Header as='h5'>
