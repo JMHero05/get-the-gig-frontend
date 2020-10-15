@@ -1,24 +1,39 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { signOut } from '../../redux/actions/authAction';
 import { NavLink } from 'react-router-dom';
 import { Nav, Button } from 'react-bootstrap';
 
-export default function CastingLinks() {
+function CastingLinks(props) {
+  console.log(props);
   return (
-    <Nav>
-      <NavLink to='/'>
-        <Nav.Link className='mr-2'>New Project</Nav.Link>
-      </NavLink>
-      <NavLink to='/'>
-        <Nav.Link className='mr-2'>Projects</Nav.Link>
-      </NavLink>
-      <NavLink to='/'>
-        <Nav.Link className='mr-2'>Sign Out</Nav.Link>
-      </NavLink>
-      <NavLink to='/'>
-        <Button variant='outline-secondary' className='ml-2'>
-          JM
-        </Button>
-      </NavLink>
-    </Nav>
+    <>
+      <Nav>
+        <Nav.Link className='mr-2'>
+          <NavLink to='/gigs/create'>New Project</NavLink>
+        </Nav.Link>
+        <Nav.Link className='mr-2'>
+          <NavLink to='/gigs'>Projects</NavLink>
+        </Nav.Link>
+        <Nav.Link>
+          <Button variant='outline-secondary' className='ml-2'>
+            JM
+          </Button>
+        </Nav.Link>
+      </Nav>
+      <Button onClick={props.signOut}>Sign Out</Button>
+    </>
   );
 }
+
+const mapStateToProps = (state) => {
+  console.log(state);
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    signOut: () => dispatch(signOut()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CastingLinks);
