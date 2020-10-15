@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getGig } from '../redux/actions/gigActions';
 import { Jumbotron, Container, Row, Col } from 'react-bootstrap';
+import RoleDetails from './RoleDetails';
 
 function GigDetails(props) {
   const { gig } = props;
@@ -94,7 +95,7 @@ function GigDetails(props) {
           <Row className='justify-content-center'>
             <div>Casting Director: {gig.casting_director.name}</div>
           </Row>
-          <Row className='justify-content-center mb-5'>
+          <Row className='justify-content-center mb-3'>
             <Col>
               <div>Audition Date: {gig.audition_date}</div>
             </Col>
@@ -102,6 +103,14 @@ function GigDetails(props) {
               <div>Audition Location: {gig.audition_location}</div>
             </Col>
           </Row>
+        </Container>
+        <Container>
+          <div className='mb-5'>
+            {gig.roles &&
+              gig.roles.map((role) => (
+                <RoleDetails role={role} key={role.id} />
+              ))}
+          </div>
         </Container>
       </>
     );
