@@ -1,7 +1,18 @@
 import React from 'react';
-import { Card, Row, Col, Container } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { getGig } from '../redux/actions/gigActions';
+import { useHistory } from 'react-router-dom';
+import { Card, Row, Col, Container, Button } from 'react-bootstrap';
 
-export default function Gig({ gig }) {
+function GigCard(props) {
+  const { gig } = props;
+  let history = useHistory();
+
+  const clickHandler = (id) => {
+    props.getGig(id);
+    history.push(`/gigs/${id}`);
+  };
+
   return (
     <>
       <Container>
@@ -13,7 +24,9 @@ export default function Gig({ gig }) {
               </Card.Subtitle>
             </Col>
             <Col>
-              <Card.Title>{gig.title}</Card.Title>
+              <Button variant='link' onClick={() => clickHandler(gig.id)}>
+                <Card.Title>{gig.title}</Card.Title>
+              </Button>
             </Col>
             <Col>
               <Card.Subtitle className='text-muted'>
@@ -25,7 +38,7 @@ export default function Gig({ gig }) {
             </Col>
             <Col>
               <Card.Subtitle className='text-muted'>
-                {gig.casting_director_id}
+                {gig.casting_director.name}
               </Card.Subtitle>
             </Col>
           </Row>
@@ -34,3 +47,9 @@ export default function Gig({ gig }) {
     </>
   );
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return { getGig: (gig) => dispatch(getGig(gig)) };
+};
+
+export default connect(null, mapDispatchToProps)(GigCard);
