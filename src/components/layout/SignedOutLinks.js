@@ -5,9 +5,9 @@ import { Nav } from 'react-bootstrap';
 export default function ActorLinks() {
   return (
     <Nav>
-      <NavLink to='/'>
-        <Nav.Link className='mr-2'>Sign In</Nav.Link>
-      </NavLink>
+      <Nav.Link className='mr-2'>
+        <NavLink to='/signin'>Sign In</NavLink>
+      </Nav.Link>
     </Nav>
   );
 }
