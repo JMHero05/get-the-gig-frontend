@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { castingSignIn } from '../redux/actions/authAction';
 import { Form, Row, Col, Button, Container } from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
 
 class SignIn extends Component {
   state = {
@@ -22,12 +25,6 @@ class SignIn extends Component {
       password: this.state.actorPassword,
     };
     console.log(actor);
-    this.setState(() => ({
-      actorEmail: '',
-      actorPassword: '',
-      castingEmail: '',
-      castingPassword: '',
-    }));
   };
 
   castingHandleSubmit = (e) => {
@@ -36,17 +33,14 @@ class SignIn extends Component {
       email: this.state.castingEmail,
       password: this.state.castingPassword,
     };
-    console.log(casting);
-    this.setState(() => ({
-      actorEmail: '',
-      actorPassword: '',
-      castingEmail: '',
-      castingPassword: '',
-    }));
+    this.props.castingSignIn(casting);
   };
 
   render() {
-    console.log(this.state);
+    const { authError, user } = this.props;
+
+    if (user) return <Redirect to='/gigs' />;
+
     return (
       <Container className='m-5' fluid>
         <Row>
@@ -77,6 +71,7 @@ class SignIn extends Component {
               </Button>
             </Form>
           </Col>
+
           <Col className='col-md-6'>
             <h5>Casting Director Sign In</h5>
             <Form onSubmit={this.castingHandleSubmit}>
@@ -102,6 +97,9 @@ class SignIn extends Component {
               <Button variant='primary' type='submit'>
                 Submit
               </Button>
+              <div className='text-danger center'>
+                {authError ? <p>{authError}</p> : null}
+              </div>
             </Form>
           </Col>
         </Row>
@@ -110,4 +108,17 @@ class SignIn extends Component {
   }
 }
 
-export default SignIn;
+const mapStateToProps = (state) => {
+  return {
+    authError: state.auth.authError,
+    user: state.auth.user,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    castingSignIn: (credentials) => dispatch(castingSignIn(credentials)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
