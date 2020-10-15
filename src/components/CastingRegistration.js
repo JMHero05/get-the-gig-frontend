@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { castingRegistration } from '../redux/actions/authAction';
+import { Redirect } from 'react-router-dom';
 import { Form, Col, Button, Container } from 'react-bootstrap';
-import { states } from '../helpers/state.js';
+import { states } from '../helpers/states.js';
 
 class CastingRegistration extends Component {
   state = {
@@ -23,20 +26,15 @@ class CastingRegistration extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    let casting = {
-      name: this.state.name,
-      agency: this.state.agency,
-      address: this.state.address,
-      city: this.state.city,
-      state: this.state.state,
-      zip: this.state.zip,
-      email: this.state.email,
-      password: this.state.password,
-    };
-    console.log(casting);
+    let casting = this.state;
+    this.props.castingRegistration(casting);
   };
 
   render() {
+    const { user, authError } = this.props;
+
+    if (user) return <Redirect to='/gigs' />;
+
     return (
       <Container className='m-5'>
         <h1>Casting Director Registration</h1>
@@ -118,10 +116,29 @@ class CastingRegistration extends Component {
           <Button variant='primary' type='submit'>
             Submit
           </Button>
+          <div className='text-danger center'>
+            {authError ? <p>{authError}</p> : null}
+          </div>
         </Form>
       </Container>
     );
   }
 }
 
-export default CastingRegistration;
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.user,
+    authError: state.auth.authError,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    castingRegistration: (casting) => dispatch(castingRegistration(casting)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CastingRegistration);
