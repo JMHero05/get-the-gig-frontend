@@ -11,6 +11,7 @@ import GigNavbar from './components/layout/GigNavbar';
 import GigContainer from './containers/GigContainer';
 import CreateGig from './components/CreateGig';
 import GigDetails from './components/GigDetails';
+import CastingProfile from './components/CastingProfile';
 
 class App extends Component {
   componentDidMount() {
@@ -29,10 +30,14 @@ class App extends Component {
             render={() => <CastingRegistration />}
           />
           <Route
+            path='/casting_director/profile'
+            render={() => <CastingProfile />}
+          />
+          <Route
             path='/actor/registration'
             render={() => <ActorRegistration />}
           />
-          <Route path='/gigs/create' render={() => <CreateGig />} />
+          <Route path='/gigs/create' component={CreateGig} />
           <Route path='/gigs/:id' component={GigDetails} />
           <Route path='/gigs' render={() => <GigContainer />} />
         </Switch>
