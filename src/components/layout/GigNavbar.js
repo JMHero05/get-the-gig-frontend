@@ -9,7 +9,7 @@ import SignedOutLinks from './SignedOutLinks';
 function GigNavbar(props) {
   const { user } = props;
 
-  const castingLinks = user.agency ? <CastingLinks /> : <SignedOutLinks />;
+  const castingLinks = user ? <CastingLinks /> : <SignedOutLinks />;
 
   return (
     <Navbar bg='dark' variant='dark' sticky='top'>
