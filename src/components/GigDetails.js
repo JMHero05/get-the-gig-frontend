@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { connect } from 'react-redux';
 import { getGig } from '../redux/actions/gigActions';
 import { Jumbotron, Container, Row, Col } from 'react-bootstrap';
@@ -20,10 +21,11 @@ function GigDetails(props) {
             </Row>
             <Row className='justify-content-center'>
               <h5>
-                {gig.opening_date} - {gig.closing_date}
+                {moment(gig.opening_date).format('MMM Do, YYYY')} -{' '}
+                {moment(gig.closing_date).format('MMM Do, YYYY')}
               </h5>
             </Row>
-            <br />
+            <hr className='my-4' />
             <Row>
               <Col>
                 <div>
@@ -97,7 +99,10 @@ function GigDetails(props) {
           </Row>
           <Row className='justify-content-center mb-3'>
             <Col>
-              <div>Audition Date: {gig.audition_date}</div>
+              <div>
+                Audition Date:{' '}
+                {moment(gig.audition_date).format('MMM Do, YYYY')}
+              </div>
             </Col>
             <Col>
               <div>Audition Location: {gig.audition_location}</div>

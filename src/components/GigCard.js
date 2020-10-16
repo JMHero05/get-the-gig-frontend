@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { connect } from 'react-redux';
 import { getGig } from '../redux/actions/gigActions';
 import { useHistory } from 'react-router-dom';
@@ -20,7 +21,8 @@ function GigCard(props) {
           <Row className='align-items-center m-1'>
             <Col>
               <Card.Subtitle className='text-muted'>
-                {gig.opening_date} - {gig.closing_date}
+                {moment(gig.opening_date).format('MMM Do, YYYY')} -{' '}
+                {moment(gig.closing_date).format('MMM Do, YYYY')}
               </Card.Subtitle>
             </Col>
             <Col>
@@ -34,7 +36,9 @@ function GigCard(props) {
               </Card.Subtitle>
             </Col>
             <Col>
-              <Card.Text>{gig.audition_date}</Card.Text>
+              <Card.Text>
+                {moment(gig.audition_date).format('MMM Do, YYYY')}
+              </Card.Text>
             </Col>
             <Col>
               <Card.Subtitle className='text-muted'>
