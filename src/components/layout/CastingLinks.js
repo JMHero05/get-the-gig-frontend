@@ -13,7 +13,7 @@ function CastingLinks(props) {
           <NavLink to='/gigs/create'>New Project</NavLink>
         </Nav.Link>
         <Nav.Link className='mr-2'>
-          <NavLink to='/gigs'>Projects</NavLink>
+          <NavLink to='/casting_director/profile'>Projects</NavLink>
         </Nav.Link>
         <Nav.Link>
           <Button variant='outline-secondary' className='ml-2'>
