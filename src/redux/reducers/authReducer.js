@@ -9,7 +9,7 @@ import {
 
 const initState = {
   authError: null,
-  user: '',
+  user: null,
 };
 
 const authReducer = (state = initState, action) => {
