@@ -59,6 +59,7 @@ class CreateGig extends Component {
     e.preventDefault();
     let gig = this.state;
     this.props.createGig(gig);
+    this.props.history.push('/gigs');
   };
 
   render() {
@@ -197,6 +198,15 @@ class CreateGig extends Component {
               />
             </Form.Group>
           </Form.Row>
+
+          <Form.Label id='dynamicInput'>Add Roles</Form.Label>
+          <br />
+          {this.state.inputs.map((input) => (
+            <Form.Row>
+              <Form.Label>Character Name</Form.Label>
+              <Form.Control name='inputs' key={input}></Form.Control>
+            </Form.Row>
+          ))}
 
           <Button variant='primary' type='submit'>
             Submit
