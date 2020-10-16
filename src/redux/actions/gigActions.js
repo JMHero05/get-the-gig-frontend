@@ -1,7 +1,7 @@
-import { GIG } from '../../helpers/routes';
+import { GIG, ROLE } from '../../helpers/routes';
 import { CREATE_GIG, GET_GIGS, GET_GIG } from '../constants/actionTypes';
 
-export const createGig = (gig) => {
+export const createGig = (gig, roles) => {
   return (dispatch, getState) => {
     fetch(GIG, {
       method: 'POST',
@@ -10,25 +10,30 @@ export const createGig = (gig) => {
         Accept: 'application/json',
       },
       body: JSON.stringify({
-        casting_director_id: gig.casting_director_id,
-        title: gig.title,
-        gig_type: gig.gig_type,
-        union: gig.union,
-        producer: gig.producer,
-        director: gig.director,
-        choreographer: gig.choreographer,
-        music_director: gig.music_director,
-        opening_date: gig.opening_date,
-        closing_date: gig.closing_date,
-        gig_location: gig.gig_location,
-        pay_rate: gig.pay_rate,
-        audition_date: gig.audition_date,
-        audition_location: gig.audition_location,
+        gig,
       }),
     })
       .then((resp) => resp.json())
-      .then(console.log);
-    dispatch({ type: CREATE_GIG, gig });
+      .then((data) => {
+        roles.map((role) =>
+          fetch(ROLE, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+            },
+            body: JSON.stringify({
+              gig_id: data.id,
+              role_type: role.role_type,
+              name: role.name,
+              description: role.description,
+              gender: role.gender,
+              beg_age_range: role.beg_age_range,
+              end_age_range: role.end_age_range,
+            }),
+          })
+        );
+      });
   };
 };
 
