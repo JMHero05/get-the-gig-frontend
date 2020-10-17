@@ -74,7 +74,16 @@ export const castingRegistration = (casting) => {
         Accept: 'application/json',
       },
       body: JSON.stringify({
-        casting,
+        casting_director: {
+          name: casting.name,
+          email: casting.email,
+          password: casting.password,
+          agency: casting.agency,
+          address: casting.address,
+          city: casting.city,
+          state: casting.state,
+          zip: casting.zip,
+        },
       }),
     })
       .then((resp) => resp.json().then((user) => ({ user, resp })))
