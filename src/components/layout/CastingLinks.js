@@ -26,14 +26,10 @@ function CastingLinks(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  console.log(state);
-};
-
 const mapDispatchToProps = (dispatch) => {
   return {
     signOut: () => dispatch(signOut()),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CastingLinks);
+export default connect(null, mapDispatchToProps)(CastingLinks);
