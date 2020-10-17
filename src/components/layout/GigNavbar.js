@@ -29,23 +29,21 @@ function GigNavbar(props) {
 
 const routeHelper = (user) => {
   if (user && user.agency) {
+    console.log('Casting Links');
     return <CastingLinks />;
   } else if (user && user.gender) {
-    console.log('actor links');
+    console.log('Actor Links');
     return <ActorLinks />;
   } else {
-    console.log('signed out links');
+    console.log('Signed Out Links');
     return <SignedOutLinks />;
   }
 };
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     user: state.auth.user,
   };
 };
-
-const mapDispatchToProps = {};
 
 export default connect(mapStateToProps)(GigNavbar);
