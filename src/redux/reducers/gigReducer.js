@@ -3,6 +3,7 @@ import {
   GET_GIG,
   CREATE_GIG,
   CREATE_GIG_ERROR,
+  DELETE_GIG,
 } from '../constants/actionTypes';
 
 const initState = {
@@ -25,6 +26,11 @@ const gigReducer = (state = initState, action) => {
     case CREATE_GIG_ERROR:
       console.log('create project error', action.error);
       return state;
+    case DELETE_GIG:
+      return {
+        ...state,
+        gigs: state.gigs.filter((gig) => gig.id !== action.payload.id),
+      };
     default:
       return state;
   }

@@ -1,9 +1,12 @@
 import React from 'react';
 import moment from 'moment';
+import { connect } from 'react-redux';
+import { deleteGig } from '../redux/actions/gigActions';
 import { Card, Row, Col, Container, Button, Nav } from 'react-bootstrap';
 
-export default function ProjectCard(props) {
+function ProjectCard(props) {
   const { project } = props;
+
   return (
     <Card className='mb-3' style={{ width: '18rem' }}>
       <Card.Header>
@@ -43,9 +46,27 @@ export default function ProjectCard(props) {
           {moment(project.opening_date).format('MMM Do, YYYY')}{' '}
           <strong>-</strong>{' '}
           {moment(project.closing_date).format('MMM Do, YYYY')}
+          <hr className='my-4' />
+          <Row>
+            <Button variant='outline-primary' className='mr-3'>
+              View Auditions
+            </Button>
+            <Button
+              variant='outline-danger'
+              onClick={() => props.deletingGig(project.id)}>
+              Delete Project
+            </Button>
+          </Row>
         </Card.Text>
-        <Button variant='primary'>View Auditions</Button>
       </Card.Body>
     </Card>
   );
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deletingGig: (id) => dispatch(deleteGig(id)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(ProjectCard);

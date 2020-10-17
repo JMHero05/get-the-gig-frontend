@@ -41,6 +41,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CastingProfile);
+export default connect(mapStateToProps)(CastingProfile);

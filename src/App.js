@@ -29,10 +29,7 @@ class App extends Component {
             path='/casting_director/registration'
             render={() => <CastingRegistration />}
           />
-          <Route
-            path='/casting_director/profile'
-            render={() => <CastingProfile />}
-          />
+          <Route path='/casting_director/profile' component={CastingProfile} />
           <Route
             path='/actor/registration'
             render={() => <ActorRegistration />}
