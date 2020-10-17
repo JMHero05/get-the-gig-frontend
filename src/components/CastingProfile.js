@@ -1,11 +1,12 @@
 import React from 'react';
-import { Jumbotron, Container } from 'react-bootstrap';
-import { Redirect } from 'react-router-dom';
+import { Jumbotron, Container, Button } from 'react-bootstrap';
+import { Redirect, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ProjectCard from './ProjectCard';
 
 const CastingProfile = (props) => {
   const { user, gigs } = props;
+  let history = useHistory();
 
   if (!user) return <Redirect to='/signin' />;
 
@@ -14,12 +15,19 @@ const CastingProfile = (props) => {
       <Jumbotron>
         <h1 className='display-4'>Hi {user.name}!</h1>
         <hr className='my-4' />
-        {user.gigs ? (
+        {gigs.find((gig) => gig.casting_director.id === user.id) ? (
           <p className='lead'>
             Your current/upcoming projects are listed below...
           </p>
         ) : (
-          <p className='lead'>You have no upcoming projects</p>
+          <>
+            <p className='lead'>You have no upcoming projects</p>
+            <Button
+              variant='outline-primary'
+              onClick={() => history.push('/gigs/create')}>
+              Create New Gig
+            </Button>
+          </>
         )}
       </Jumbotron>
       <Container>
