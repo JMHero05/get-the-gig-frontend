@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { actorRegistration } from '../redux/actions/authAction';
 import { Redirect } from 'react-router-dom';
 import { Form, Col, Button, Container, FormFile } from 'react-bootstrap';
 import { states } from '../helpers/states';
@@ -28,11 +29,11 @@ class ActorRegistration extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     let actor = this.state;
-    console.log(actor);
+    this.props.actorRegistration(actor);
   };
 
   render() {
-    const { user } = this.props;
+    const { user, authError } = this.props;
 
     if (user) return <Redirect to='/gigs' />;
 
@@ -139,6 +140,9 @@ class ActorRegistration extends Component {
           <Button variant='primary' type='submit'>
             Submit
           </Button>
+          <div className='text-danger center'>
+            {authError ? <p>{authError}</p> : null}
+          </div>
         </Form>
       </Container>
     );
@@ -148,7 +152,14 @@ class ActorRegistration extends Component {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
+    authError: state.auth.authError,
   };
 };
 
-export default connect(mapStateToProps)(ActorRegistration);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actorRegistration: (actor) => dispatch(actorRegistration(actor)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ActorRegistration);

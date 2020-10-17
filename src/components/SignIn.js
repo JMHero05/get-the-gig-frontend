@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { castingSignIn } from '../redux/actions/authAction';
+import { castingSignIn, actorSignIn } from '../redux/actions/authAction';
 import { Form, Row, Col, Button, Container } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 
@@ -24,7 +24,7 @@ class SignIn extends Component {
       email: this.state.actorEmail,
       password: this.state.actorPassword,
     };
-    console.log(actor);
+    this.props.actorSignIn(actor);
   };
 
   castingHandleSubmit = (e) => {
@@ -43,6 +43,11 @@ class SignIn extends Component {
 
     return (
       <Container className='m-5' fluid>
+        <Row>
+          <div className='text-danger center'>
+            {authError ? <p>{authError}</p> : null}
+          </div>
+        </Row>
         <Row>
           <Col className='col-md-6'>
             <h5>Actor Sign In</h5>
@@ -97,9 +102,6 @@ class SignIn extends Component {
               <Button variant='primary' type='submit'>
                 Submit
               </Button>
-              <div className='text-danger center'>
-                {authError ? <p>{authError}</p> : null}
-              </div>
             </Form>
           </Col>
         </Row>
@@ -118,6 +120,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     castingSignIn: (credentials) => dispatch(castingSignIn(credentials)),
+    actorSignIn: (credentials) => dispatch(actorSignIn(credentials)),
   };
 };
 
