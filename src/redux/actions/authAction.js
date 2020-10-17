@@ -8,11 +8,10 @@ import {
 } from '../constants/actionTypes';
 import {
   CASTING_SIGN_IN,
-  CASTING_PROFILE,
+  PROFILE,
   CASTING,
   ACTOR,
   ACTOR_SIGN_IN,
-  ACTOR_PROFILE,
 } from '../../helpers/routes';
 
 export const validToken = () => {
@@ -20,21 +19,25 @@ export const validToken = () => {
     const token = localStorage.getItem('token');
     // debugger;
     if (token) {
-      fetch(CASTING_PROFILE, {
+      fetch(PROFILE, {
         method: 'GET',
         headers: { Authorization: `Bearer ${token}` },
       })
         .then((resp) => resp.json())
         .then((data) => {
-          dispatch({
-            type: VALID_TOKEN,
-            user: data.casting_director,
-          });
+          if (data.casting_director) {
+            dispatch({
+              type: VALID_TOKEN,
+              user: data.casting_director,
+            });
+          } else {
+            dispatch({
+              type: VALID_TOKEN,
+              user: data.actor,
+            });
+          }
         });
     }
-    // else {
-    //   history.push(ROUTES.HOME);
-    // }
   };
 };
 
