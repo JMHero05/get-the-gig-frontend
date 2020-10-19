@@ -11,7 +11,7 @@ function CastingLinks(props) {
         <NavLink to='/gigs/create'>
           <Button variant='link'>New Project</Button>
         </NavLink>
-        <NavLink to='/casting_director/profile'>
+        <NavLink to='/profile'>
           <Button variant='link'>Projects</Button>
         </NavLink>
         <Nav.Link>
