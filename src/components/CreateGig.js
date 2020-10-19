@@ -124,7 +124,11 @@ class CreateGig extends Component {
   render() {
     const { user } = this.props;
 
-    if (!user) return <Redirect to='/signin' />;
+    if (!user) {
+      return <Redirect to='/signin' />;
+    } else if (!user.agency) {
+      return <Redirect to='/gigs' />;
+    }
 
     return (
       <Container className='m-5'>

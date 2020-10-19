@@ -1,13 +1,16 @@
 import React from 'react';
 import moment from 'moment';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getGig } from '../redux/actions/gigActions';
 import { Jumbotron, Container, Row, Col } from 'react-bootstrap';
-import RoleDetails from './RoleCard';
+import RoleCard from './RoleCard';
 
 function GigDetails(props) {
-  const { gig } = props;
-  console.log(props);
+  const { gig, user } = props;
+
+  if (!user) return <Redirect to='/signin' />;
+
   if (gig && gig.id === parseInt(props.match.params.id)) {
     return (
       <>
@@ -112,9 +115,7 @@ function GigDetails(props) {
         <Container>
           <div className='mb-5'>
             {gig.roles &&
-              gig.roles.map((role) => (
-                <RoleDetails role={role} key={role.id} />
-              ))}
+              gig.roles.map((role) => <RoleCard role={role} key={role.id} />)}
           </div>
         </Container>
       </>
@@ -131,6 +132,7 @@ function GigDetails(props) {
 const mapStateToProps = (state) => {
   return {
     gig: state.gig.gig,
+    user: state.auth.user,
   };
 };
 
