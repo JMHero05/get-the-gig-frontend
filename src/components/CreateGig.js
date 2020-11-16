@@ -273,14 +273,12 @@ class CreateGig extends Component {
               </h3>
             )}
             <Button
-              variant='outline-danger'
+              variant='danger'
               className='mr-3'
               onClick={() => this.handleRemoveRole()}>
               -
             </Button>
-            <Button
-              variant='outline-success'
-              onClick={() => this.handleAddRole()}>
+            <Button variant='success' onClick={() => this.handleAddRole()}>
               +
             </Button>
           </Form.Row>
