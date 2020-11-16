@@ -7,3 +7,6 @@ export const ACTOR = 'http://localhost:3000/api/v1/actors/';
 export const ACTOR_SIGN_IN = 'http://localhost:3000/api/v1/actors/login';
 export const ROLE = 'http://localhost:3000/api/v1/roles/';
 export const ACTOR_AUDITIONS = 'http://localhost:3000/api/v1/actors/auditions/';
+export const AUDITION = 'http://localhost:3000/api/v1/auditions/';
+export const GIG_AUDITIONS =
+  'http://localhost:3000/api/v1/casting_directors/auditions/';
