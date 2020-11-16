@@ -13,11 +13,6 @@ function ActorLinks(props) {
       <Button variant='link' onClick={props.signOut}>
         Sign Out
       </Button>
-      <NavLink to='/'>
-        <Button variant='outline-secondary' className='ml-2'>
-          JM
-        </Button>
-      </NavLink>
     </Nav>
   );
 }
