@@ -1,16 +1,24 @@
-import React from 'react';
-import { Jumbotron, Container, Button } from 'react-bootstrap';
+import React, { useEffect } from 'react';
+import { Jumbotron, Container, Button, Row, Col, Image } from 'react-bootstrap';
 import { Redirect, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ProjectCard from './ProjectCard';
 import AuditionCard from './AuditionCard';
+import { getActorAuditions } from '../redux/actions/auditionAction';
+import '../styles/profile.css';
 
 const Profile = (props) => {
-  const { user, auditions, gigs } = props;
+  const { user, auditions, gigs, fetchAuditions } = props;
   let history = useHistory();
-  console.log('Auditions', auditions);
-  console.log('Gigs', gigs);
+
   if (!user) return <Redirect to='/signin' />;
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    if (user && user.gender) {
+      fetchAuditions(user.id);
+    }
+  }, [fetchAuditions, user]);
 
   function userProfileRender(user, gigs, auditions) {
     if (user && user.agency) {
@@ -57,29 +65,40 @@ const Profile = (props) => {
         )
       );
     } else {
-      return (
-        auditions &&
-        auditions.map((audition) => (
-          <AuditionCard
-            gig={gigs.find((gig) => gig.id === audition.role.gig_id)}
-            key={audition.id}
-            audition={audition}
-          />
-        ))
-      );
+      return auditions && auditions.length < 1
+        ? null
+        : auditions &&
+            auditions.map((audition) => (
+              <AuditionCard
+                gig={gigs.find((gig) => gig.id === audition.role.gig_id)}
+                key={audition.id}
+                audition={audition}
+              />
+            ));
     }
   }
 
   return (
     <>
       <Jumbotron>
-        <h1 className='display-4'>
-          Hi {user && user.agency ? user.name : user.first_name}!
-        </h1>
-        <hr className='my-4' />
-        {userProfileRender(user, gigs, auditions)}
+        <Row>
+          {user && user.gender ? (
+            <Image src={user.image} fluid rounded className='headshot' />
+          ) : null}
+        </Row>
+        <Row>
+          <h1 className='display-4'>
+            Hi {user && user.agency ? user.name : user.first_name}!
+          </h1>
+        </Row>
+        <hr />
+        <div>{userProfileRender(user, gigs, auditions)}</div>
       </Jumbotron>
-      <Container>{userGigsOrAuditionsRender(user, gigs, auditions)}</Container>
+      <Container>
+        <div className='band'>
+          {userGigsOrAuditionsRender(user, gigs, auditions)}
+        </div>
+      </Container>
     </>
   );
 };
@@ -92,4 +111,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Profile);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchAuditions: (id) => dispatch(getActorAuditions(id)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);
