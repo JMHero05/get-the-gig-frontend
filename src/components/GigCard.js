@@ -17,34 +17,53 @@ function GigCard(props) {
   return (
     <>
       <Container>
-        <Card className='w-100 mb-3' bg='light'>
-          <Row className='align-items-center m-1'>
-            <Col>
-              <Card.Subtitle className='text-muted'>
-                {moment(gig.opening_date).format('MMM Do, YYYY')} -{' '}
-                {moment(gig.closing_date).format('MMM Do, YYYY')}
-              </Card.Subtitle>
-            </Col>
-            <Col>
-              <Button variant='link' onClick={() => clickHandler(gig.id)}>
-                <Card.Title>{gig.title}</Card.Title>
+        <Card className='w-100 mb-3 card'>
+          <Row className='align-items-center mx-1 my-1'>
+            <div className='col'>
+              <Row>
+                <Card.Text className='text-muted'>Gig Dates:</Card.Text>
+              </Row>
+              <Row>
+                <Card.Text className='mx-0 my-0'>
+                  {moment(gig.opening_date).format('MMM Do, YYYY')} -{' '}
+                  {moment(gig.closing_date).format('MMM Do, YYYY')}
+                </Card.Text>
+              </Row>
+            </div>
+            <div className='col'>
+              <Button
+                variant='link'
+                // size='sm'
+                onClick={() => clickHandler(gig.id)}>
+                <span className='btn-text'>{gig.title}</span>
               </Button>
-            </Col>
-            <Col>
-              <Card.Subtitle className='text-muted'>
-                {gig.gig_location}
-              </Card.Subtitle>
-            </Col>
-            <Col>
-              <Card.Text>
-                {moment(gig.audition_date).format('MMM Do, YYYY')}
-              </Card.Text>
-            </Col>
-            <Col>
-              <Card.Subtitle className='text-muted'>
-                {gig.casting_director.name}
-              </Card.Subtitle>
-            </Col>
+            </div>
+            <div className='col'>
+              <Row>
+                <Card.Text className='text-muted'>Gig Location:</Card.Text>
+              </Row>
+              <Row>
+                <Card.Text>{gig.gig_location}</Card.Text>
+              </Row>
+            </div>
+            <div className='col'>
+              <Row>
+                <Card.Text className='text-muted'>Audition Date:</Card.Text>
+              </Row>
+              <Row>
+                <Card.Text>
+                  {moment(gig.audition_date).format('MMM Do, YYYY')}
+                </Card.Text>
+              </Row>
+            </div>
+            <div className='col'>
+              <Row>
+                <Card.Text className='text-muted'>Casting Director:</Card.Text>
+              </Row>
+              <Row>
+                <Card.Text>{gig.casting_director.name}</Card.Text>
+              </Row>
+            </div>
           </Row>
         </Card>
       </Container>

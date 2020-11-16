@@ -1,13 +1,22 @@
 import React from 'react';
 import moment from 'moment';
+import { Redirect, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getGig } from '../redux/actions/gigActions';
-import { Jumbotron, Container, Row, Col } from 'react-bootstrap';
-import RoleDetails from './RoleCard';
+import { Jumbotron, Container, Row, Col, Button } from 'react-bootstrap';
+import RoleCard from './RoleCard';
 
 function GigDetails(props) {
-  const { gig } = props;
-  console.log(props);
+  const { gig, user } = props;
+  let history = useHistory();
+
+  const clickHandler = (id) => {
+    props.getGig(id);
+    history.push(`/gigs/${id}/auditions`);
+  };
+
+  if (!user) return <Redirect to='/signin' />;
+
   if (gig && gig.id === parseInt(props.match.params.id)) {
     return (
       <>
@@ -25,6 +34,15 @@ function GigDetails(props) {
                 {moment(gig.closing_date).format('MMM Do, YYYY')}
               </h5>
             </Row>
+            {user.id === gig.casting_director.id ? (
+              <Row className='justify-content-center'>
+                <Button
+                  variant='outline-primary'
+                  onClick={() => clickHandler(gig.id)}>
+                  View Auditions
+                </Button>
+              </Row>
+            ) : null}
             <hr className='my-4' />
             <Row>
               <Col>
@@ -113,7 +131,13 @@ function GigDetails(props) {
           <div className='mb-5'>
             {gig.roles &&
               gig.roles.map((role) => (
-                <RoleDetails role={role} key={role.id} />
+                <RoleCard
+                  role={role}
+                  auditionDate={gig.audition_date}
+                  auditionLocation={gig.audition_location}
+                  actorId={user.id}
+                  key={role.id}
+                />
               ))}
           </div>
         </Container>
@@ -131,6 +155,7 @@ function GigDetails(props) {
 const mapStateToProps = (state) => {
   return {
     gig: state.gig.gig,
+    user: state.auth.user,
   };
 };
 
