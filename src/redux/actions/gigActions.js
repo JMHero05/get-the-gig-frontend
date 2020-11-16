@@ -39,8 +39,9 @@ export const createGig = (gig, roles) => {
               }),
             })
           );
+        } else {
+          console.log('No Roles!');
         }
-        console.log('No Roles!');
       });
   };
 };
