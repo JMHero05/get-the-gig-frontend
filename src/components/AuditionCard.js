@@ -3,6 +3,7 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import { deleteGig } from '../redux/actions/gigActions';
 import { Card, Row, Col, Container, Button, Nav } from 'react-bootstrap';
+import '../styles/profile.css';
 
 function AuditionCard(props) {
   const { gig, audition } = props;
@@ -10,50 +11,71 @@ function AuditionCard(props) {
   console.log('Audition', audition);
 
   return (
-    <Card className='mb-3' style={{ width: '24rem' }}>
-      <Card.Header>
-        <Card.Title>{gig.title}</Card.Title>
-        <hr className='my-4' />
-        <Card.Subtitle className='text-muted mb-2'>
-          Gig Location: {gig.gig_location}
-        </Card.Subtitle>
-        <Card.Subtitle className='text-muted mb-2'>
-          Gig Dates: {moment(gig.opening_date).format('MMM Do, YYYY')}{' '}
-          <strong>-</strong> {moment(gig.closing_date).format('MMM Do, YYYY')}
-        </Card.Subtitle>
-        <Card.Subtitle className='text-muted mb-2'>
-          Casting Director: {gig.casting_director.name}
-        </Card.Subtitle>
-      </Card.Header>
-      <Card.Body>
-        <Card.Title>
-          {audition.role.name} - {audition.role.role_type}
-        </Card.Title>
-        <Card.Text className='mb-0'>{audition.role.description}</Card.Text>
-        <hr className='my-4' />
-        <Card.Title as='h6'>Audition Information</Card.Title>
-        <Card.Text className='my-0'>
-          <strong>Location:</strong> {audition.location}
-        </Card.Text>
-        <Card.Text className='my-0'>
-          <strong>Date:</strong> {moment(audition.date).format('MMM Do, YYYY')}
-        </Card.Text>
-        <Card.Text className='my-0'>
-          <strong>Time:</strong> {moment(audition.time).format('h:mm:ss a')}
-        </Card.Text>
-        {/* <Row>
-            <Button variant='outline-primary' className='mr-3'>
-              View Auditions
-            </Button>
-            <Button
-              variant='outline-danger'
-              onClick={() => props.deletingGig(project.id)}>
-              Delete Project
-            </Button>
-          </Row> */}
-      </Card.Body>
-    </Card>
+    <>
+      {audition.requested ? renderAuditionCards('primary', 'Request') : null}
+      {audition.confirmed ? renderAuditionCards('success', 'Confirmed') : null}
+      {audition.rejected ? renderAuditionCards('danger', 'Rejected') : null}
+    </>
   );
+
+  function renderAuditionCards(type, status) {
+    // debugger;
+    return (
+      <Card
+        bg={type}
+        text='white'
+        className='mb-3 card'
+        style={{ width: '100%', fontSize: '12px' }}>
+        <Card.Header>
+          {status === 'Request' ? (
+            <Card.Title>
+              Audition Request <u>Received</u>
+            </Card.Title>
+          ) : (
+            <Card.Title>
+              Audition Request <u>{status}</u>
+            </Card.Title>
+          )}
+        </Card.Header>
+        <Card.Body className='py-0'>
+          <Card.Title className='mt-2'>{gig.title}</Card.Title>
+          <hr className='my-2' />
+          <Card.Text className='mb-1'>
+            <strong>Gig Location:</strong> {gig.gig_location}
+          </Card.Text>
+          <Card.Text className='mb-1'>
+            <strong>Gig Dates:</strong>{' '}
+            {moment(gig.opening_date).format('MMM Do, YYYY')} <strong>-</strong>{' '}
+            {moment(gig.closing_date).format('MMM Do, YYYY')}
+          </Card.Text>
+          <Card.Text>
+            <strong>Casting Director:</strong> {gig.casting_director.name}
+          </Card.Text>
+        </Card.Body>
+        <Card.Footer>
+          <Card.Title className='mb-3'>Character Info</Card.Title>
+          <Card.Text>
+            {audition.role.name} - {audition.role.role_type}
+          </Card.Text>
+          <Card.Text className='mb-0'>
+            <em>{audition.role.description}</em>
+          </Card.Text>
+          <hr />
+          <Card.Title>Audition Information</Card.Title>
+          <Card.Text className='my-0'>
+            <strong>Location:</strong> {audition.location}
+          </Card.Text>
+          <Card.Text className='my-0'>
+            <strong>Date:</strong>{' '}
+            {moment(audition.date).format('MMM Do, YYYY')}
+          </Card.Text>
+          <Card.Text className='my-0'>
+            <strong>Time:</strong> {moment(audition.time).format('h:mm a')}
+          </Card.Text>
+        </Card.Footer>
+      </Card>
+    );
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
