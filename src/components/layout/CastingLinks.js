@@ -14,11 +14,6 @@ function CastingLinks(props) {
         <NavLink to='/profile'>
           <Button variant='link'>Projects</Button>
         </NavLink>
-        <Nav.Link>
-          <Button variant='outline-secondary' className='ml-2'>
-            JM
-          </Button>
-        </Nav.Link>
         <Button variant='link' onClick={props.signOut}>
           Sign Out
         </Button>
