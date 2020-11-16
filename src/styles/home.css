@@ -1,18 +1,36 @@
 .left, .right {
-	height: 50vh;
-	width: 100%
+	height: 450%;
+	width: 90%;
+	color: white;
+	/* left: 50%; */
+	/* top: 60%; */
+	/* transform: translate(-50%, -50%) */
 }
 
-@media screen and (min-width: 768px){
+/* @media screen and (min-width: 768px){
 	.left, .right {
-		height: 100vh
+		position: fixed;
 	}
+} */
+
+#myVideo {
+  position: fixed;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	opacity: 0.5;
+  /* min-width: 100%;
+	min-height: 100%;
+	object-fit: cover; */
 }
 
-.left {
-	background: lightblue;
-}
-
-.right {
-	background: lightcoral;
+.overlay {
+	height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 2;
+    background: black;
+    opacity: 0.8;
 }
