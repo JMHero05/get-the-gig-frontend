@@ -1,14 +1,21 @@
 import React from 'react';
 import moment from 'moment';
+import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { deleteGig } from '../redux/actions/gigActions';
+import { deleteGig, getGig } from '../redux/actions/gigActions';
 import { Card, Row, Col, Container, Button, Nav } from 'react-bootstrap';
 
 function ProjectCard(props) {
   const { project } = props;
+  let history = useHistory();
+
+  const clickHandler = (id) => {
+    props.getGig(id);
+    history.push(`/gigs/${id}/auditions`);
+  };
 
   return (
-    <Card className='mb-3' style={{ width: '18rem' }}>
+    <Card className='mb-3' style={{ width: '100%', fontSize: '12px' }}>
       <Card.Header>
         <Card.Title>{project.title}</Card.Title>
         <hr className='my-4' />
@@ -49,7 +56,10 @@ function ProjectCard(props) {
         </Card.Text>
         <hr className='my-4' />
         <Row>
-          <Button variant='outline-primary' className='mr-3'>
+          <Button
+            variant='outline-primary'
+            className='mr-3'
+            onClick={() => clickHandler(project.id)}>
             View Auditions
           </Button>
           <Button
@@ -66,6 +76,7 @@ function ProjectCard(props) {
 const mapDispatchToProps = (dispatch) => {
   return {
     deletingGig: (id) => dispatch(deleteGig(id)),
+    getGig: (id) => dispatch(getGig(id)),
   };
 };
 
